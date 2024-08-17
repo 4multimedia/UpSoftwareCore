@@ -1,0 +1,22 @@
+{
+    "name": "upsoftware/core",
+    "description": "Core system",
+    "autoload": {
+        "psr-4": {
+            "Upsoftware\\Core\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "UpSoftware",
+            "email": "info@upsoftware.tech"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "konekt/concord": "^1.15",
+        "spatie/laravel-sluggable": "^3.6",
+        "spatie/laravel-translatable": "^6.8",
+        "kalnoy/nestedset": "^6.0"
+    }
+}
