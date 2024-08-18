@@ -22,7 +22,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Upsoftware\\Core\\CoreServiceProvider"
+                "Upsoftware\\Core\\Providers\\CoreServiceProvider"
             ]
         }
     }
