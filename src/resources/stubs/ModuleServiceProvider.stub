@@ -1,0 +1,12 @@
+<?php
+
+namespace {{ namespace }};
+
+use Upsoftware\Core\Providers\CoreModuleServiceProvider;
+
+class ModuleServiceProvider extends CoreModuleServiceProvider {
+
+    protected $models = [];
+
+    protected $requests = [];
+}

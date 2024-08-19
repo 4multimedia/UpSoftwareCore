@@ -30,7 +30,10 @@ class CoreServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \Upsoftware\Core\Console\Commands\UpsoftwareInstall::class
+                \Upsoftware\Core\Console\Commands\UpsoftwareInstall::class,
+                \Upsoftware\Core\Console\Commands\UpsoftwareMakeModule::class,
+                \Upsoftware\Core\Console\Commands\UpsoftwareMakeController::class,
+                \Upsoftware\Core\Console\Commands\UpsoftwareMakeModel::class,
             ]);
         }
     }
