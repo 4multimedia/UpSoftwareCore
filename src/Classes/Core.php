@@ -3,7 +3,6 @@
 namespace Upsoftware\Core\Classes;
 
 use Upsoftware\Auth\Classes\Otp;
-use Upsoftware\Auth\Enums\OtpKind;
 
 class Core
 {
@@ -22,6 +21,10 @@ class Core
     public function version()
     {
         return static::UPSOFTWARE_VERSION;
+    }
+
+    public function set_config($name, array $settings) : void {
+        set_config($name, $settings);
     }
 
     public function otp() {
