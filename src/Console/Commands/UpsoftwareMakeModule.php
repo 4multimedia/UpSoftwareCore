@@ -7,13 +7,12 @@ use Illuminate\Support\Facades\File;
 class UpsoftwareMakeModule extends UpsoftwareStub
 {
     public $moduleName;
-    protected $signature = 'upsoftware:make.module';
+    protected $signature = 'upsoftware:make.module {name}';
 
     public function handle()
     {
         $this->info('Creating UpSofware module...');
-
-        $this->moduleName = 'cart';
+        $this->moduleName= $this->argument('name');
 
         $directories = [
             "Console/Commands",
