@@ -17,13 +17,14 @@ return new class extends Migration
             $table->unsignedBigInteger('media_item_id');
             $table->unsignedBigInteger('model_id');
             $table->string('model_type');
+            $table->string('collection_name')->default('default');
             $table->boolean('is_main')->default(false);
             $table->boolean('status')->default(true);
             $table->integer('position')->default(0);
 
             $table->foreign('media_item_id')->references('id')->on('media_items');
 
-            $table->index(['media_item_id', 'model_id', 'model_type'], 'model_has_medias_model_id_model_type_index');
+            $table->unique(['media_item_id', 'model_id', 'model_type', 'collection_name'], 'unique_media__item_id_model_id_model_type_collection_name');
         });
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 use Upsoftware\Core\Classes\Core;
+use Upsoftware\Core\Classes\Media;
 
 if (! function_exists('core')) {
     /**
@@ -9,6 +10,16 @@ if (! function_exists('core')) {
     function core(): Core
     {
         return app('core');
+    }
+}
+
+if (! function_exists('media')) {
+    /**
+     * Media helper.
+     */
+    function media(): Media
+    {
+        return app('media');
     }
 }
 

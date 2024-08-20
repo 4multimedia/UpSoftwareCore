@@ -6,7 +6,9 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
 use Upsoftware\Core\Classes\Core;
+use Upsoftware\Core\Classes\Media;
 use Upsoftware\Core\Facades\Core as CoreFacade;
+use Upsoftware\Core\Facades\Media as MediaFacade;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -46,6 +48,11 @@ class CoreServiceProvider extends ServiceProvider
         $loader->alias('core', CoreFacade::class);
         $this->app->singleton('core', function () {
             return app()->make(Core::class);
+        });
+
+        $loader->alias('media', MediaFacade::class);
+        $this->app->singleton('media', function () {
+            return app()->make(Media::class);
         });
     }
 }
