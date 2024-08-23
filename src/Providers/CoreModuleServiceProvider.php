@@ -17,7 +17,7 @@
                 foreach ($files as $file) {
                     $fileName = pathinfo($file->getFilename(), PATHINFO_FILENAME);
                     if ($fileName === 'api') {
-                        Route::middleware('api')
+                        Route::middleware(['api', 'locale'])
                             ->namespace($this->getNamespaceRoot() . "\\Http\\Controllers")
                             ->as('api.' . $this->shortName() . '.')
                             ->prefix(config('upsoftware.api_prefix')."/".$this->shortName())

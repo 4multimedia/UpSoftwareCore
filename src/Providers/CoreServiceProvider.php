@@ -3,8 +3,8 @@
 namespace Upsoftware\Core\Providers;
 
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-
 use Upsoftware\Core\Classes\Core;
 use Upsoftware\Core\Classes\Media;
 use Upsoftware\Core\Facades\Core as CoreFacade;
@@ -21,6 +21,8 @@ class CoreServiceProvider extends ServiceProvider
             dirname(__DIR__).'/Config/upsoftware.php'       => config_path('upsoftware.php'),
             dirname(__DIR__).'/Config/hashids.php'       => config_path('hashids.php'),
         ], 'upsoftware');
+
+        Route::aliasMiddleware('locale', \Upsoftware\Core\Http\Middleware\LocaleMiddleware::class);
     }
 
     public function register(): void
