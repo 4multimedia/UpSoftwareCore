@@ -14,6 +14,16 @@ return new class extends Migration
         Schema::create('media_items', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('primary_id')->nullable();
+            $table->unsignedBigInteger('directory_id')->nullable();
+            $table->string('file_name');
+            $table->string('file_name_original');
+            $table->string('file_path');
+            $table->string('file_type')->nullable();
+            $table->json('file_info')->nullable();
+
+            $table->foreign('primary_id')->references('id')->on('media_items');
+            $table->foreign('directory_id')->references('id')->on('media_directories');
         });
     }
 

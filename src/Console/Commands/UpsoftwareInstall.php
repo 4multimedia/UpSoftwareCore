@@ -14,7 +14,10 @@ class UpsoftwareInstall extends Command
     {
         $this->info('Publish configurations');
         Artisan::call('vendor:publish --tag=upsoftware');
+        $this->info('Create the symbolic link to storage');
+        Artisan::call('storage:link');
 
+        $this->info('Create hash configuration');
         core()->set_config('hashids', [
             'connections.main.salt' => Str::random(32),
             'connections.main.length' => 64,
