@@ -32,7 +32,7 @@ trait UseHash {
     }
 
     public function getHashAttribute() {
-        return $this->getHash($this->primaryKey);
+        return $this->getHash($this->{$this->primaryKey});
     }
 
     public static function byHash($hash): ?self
