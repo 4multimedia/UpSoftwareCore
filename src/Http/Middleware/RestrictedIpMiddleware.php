@@ -23,9 +23,14 @@ class RestrictedIpMiddleware
             '127.0.0.1',
         ], $config_allowed_ips);
         
-        $client_ip = $request->ip();
+        $owner_ip = $request->getClientIp();
+        $client_ip = request()->server('SERVER_ADDR') ?? env('SERVER_ADDR');
         if (!in_array($client_ip, $allowed_ips)) {
-            return response()->json(['message' => 'Unauthorized.', 'ip' => $client_ip], 403);
+            return response()->json([
+                'message' => 'Unauthorized.',
+                'accepted' => $client_ip,
+                'owner_ip' => $owner_ip
+            ], 403);
         }
 
         return $next($request);
