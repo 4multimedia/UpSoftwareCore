@@ -17,9 +17,9 @@ class CoreServiceProvider extends ServiceProvider
         include __DIR__.'/../Http/helpers.php';
 
         $this->publishes([
-            dirname(__DIR__).'/Config/concord.php'       => config_path('concord.php'),
+            dirname(__DIR__).'/Config/concord.php'          => config_path('concord.php'),
             dirname(__DIR__).'/Config/upsoftware.php'       => config_path('upsoftware.php'),
-            dirname(__DIR__).'/Config/hashids.php'       => config_path('hashids.php'),
+            dirname(__DIR__).'/Config/hashids.php'          => config_path('hashids.php'),
         ], 'upsoftware');
 
         Route::aliasMiddleware('locale', \Upsoftware\Core\Http\Middleware\LocaleMiddleware::class);

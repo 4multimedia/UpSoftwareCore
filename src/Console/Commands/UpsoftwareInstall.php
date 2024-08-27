@@ -16,6 +16,8 @@ class UpsoftwareInstall extends Command
         Artisan::call('vendor:publish --tag=upsoftware');
         $this->info('Create the symbolic link to storage');
         Artisan::call('storage:link');
+        $this->info('Publish Translation Loader');
+        Artisan::call('vendor:publish --provider=Spatie\TranslationLoader\TranslationServiceProvider');
 
         $this->info('Create hash configuration');
         core()->set_config('hashids', [
