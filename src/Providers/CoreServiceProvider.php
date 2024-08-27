@@ -23,6 +23,7 @@ class CoreServiceProvider extends ServiceProvider
         ], 'upsoftware');
 
         Route::aliasMiddleware('locale', \Upsoftware\Core\Http\Middleware\LocaleMiddleware::class);
+        Route::aliasMiddleware('restricted-ip', \Upsoftware\Core\Http\Middleware\RestrictedIpMiddleware::class);
     }
 
     public function register(): void

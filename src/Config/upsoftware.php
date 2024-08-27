@@ -2,6 +2,7 @@
 
     return [
         'api_prefix' => 'api',
+        'allowed_id' => [],
         'otp' => [
             'time' => 30,
             'type' => 'digits', // digits, letters,
