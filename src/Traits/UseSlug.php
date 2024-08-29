@@ -9,6 +9,14 @@ trait UseSlug
 {
     use HasTranslatableSlug;
     
+    public static function bootUseSlug(): void {
+        static::saving(function ($model) {
+            if (!$model->slug) {
+                $model->generateSlug();
+            }
+        });
+    }
+
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
