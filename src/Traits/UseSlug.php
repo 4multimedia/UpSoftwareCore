@@ -15,6 +15,14 @@ trait UseSlug
                 $model->generateSlug();
             }
         });
+
+        static::booted(function ($model) {
+            if (property_exists($model, 'translatable') && is_array($model->translatable)) {
+                if (!in_array('slug', $model->translatable)) {
+                    $model->translatable[] = 'slug';
+                }
+            }
+        });
     }
 
     public function getSlugOptions() : SlugOptions
