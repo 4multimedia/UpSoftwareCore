@@ -10,25 +10,34 @@ trait UseSlug
     use HasTranslatableSlug;
     
     public static function bootUseSlug(): void {
-        static::saving(function ($model) {
-            if (!$model->slug) {
-                $model->generateSlug();
-            }
-        });
-
         static::booted(function ($model) {
+
+            $slugField = property_exists($model, 'slugField') ? $model->slugField : 'slug';
+
             if (property_exists($model, 'translatable') && is_array($model->translatable)) {
-                if (!in_array('slug', $model->translatable)) {
-                    $model->translatable[] = 'slug';
-                }
+                $model->addTranslatableAttribute($slugField);
             }
         });
     }
 
+    public function initializeUseSlug(): void
+    {
+        $slugField = property_exists($this, 'slugField') ? $this->slugField : 'slug';
+
+        if (property_exists($this, 'translatable') && is_array($this->translatable)) {
+            if (!in_array($slugField, $this->translatable)) {
+                $this->translatable[] = $slugField;
+            }
+        }
+    }
+
     public function getSlugOptions() : SlugOptions
     {
+        $slugSource = property_exists($this, 'slugSource') ? $this->slugSource : 'name';
+        $slugField = property_exists($this, 'slugField') ? $this->slugField : 'slug';
+
         return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
+            ->generateSlugsFrom($slugSource)
+            ->saveSlugsTo($slugField);
     }
 }
