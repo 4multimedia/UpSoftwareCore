@@ -25,7 +25,7 @@ class RestrictedIpMiddleware
         
         $owner_ip = $request->getClientIp();
         $client_ip = request()->server('SERVER_ADDR') ?? env('SERVER_ADDR');
-        if (!in_array($client_ip, $allowed_ips)) {
+        if (!in_array($client_ip, $allowed_ips) && $client_ip !== null) {
             return response()->json([
                 'message' => 'Unauthorized.',
                 'accepted' => $client_ip,

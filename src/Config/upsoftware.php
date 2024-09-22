@@ -42,5 +42,6 @@
         | do dodatkowej tabeli itp.
         |
         */
+        'store_register' => function($request) {},
         'after_register' => function ($user, $request) {},
     ];
