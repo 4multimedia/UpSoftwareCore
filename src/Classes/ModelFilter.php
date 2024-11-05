@@ -32,7 +32,7 @@ class ModelFilter
     public function search() {
         $rowsPerPage = request()->input('rows_per_page', 10);
         $orderBy = request()->input('order_by', 'name');
-        $direction = request()->input('direction', 'asc');
+        $direction = request()->descending === 'true' ? 'DESC' : 'ASC';
 
         $items = $this->modelClass::orderBy($orderBy, $direction);
         if ($this->pagination) {
