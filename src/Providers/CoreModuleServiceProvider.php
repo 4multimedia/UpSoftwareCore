@@ -5,6 +5,8 @@
     use Konekt\Concord\BaseModuleServiceProvider;
     use Illuminate\Support\Facades\Route;
     use Illuminate\Support\Facades\File;
+    use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+    use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
     class CoreModuleServiceProvider extends BaseModuleServiceProvider {
 
@@ -12,12 +14,16 @@
         {
             $directory = $this->getBasePath()."/".$this->convention->routesFolder();
 
+            $middleware = ['api', 'locale'];
+            $middleware[] = InitializeTenancyByDomain::class;
+            $middleware[] = PreventAccessFromCentralDomains::class;
+
             if (is_dir($directory)) {
                 $files = File::files($directory);
                 foreach ($files as $file) {
                     $fileName = pathinfo($file->getFilename(), PATHINFO_FILENAME);
                     if ($fileName === 'api') {
-                        Route::middleware(['api', 'locale'])
+                        Route::middleware($middleware)
                             ->namespace($this->getNamespaceRoot() . "\\Http\\Controllers")
                             ->as('api.' . $this->shortName() . '.')
                             ->prefix(config('upsoftware.api_prefix')."/".$this->shortName())
