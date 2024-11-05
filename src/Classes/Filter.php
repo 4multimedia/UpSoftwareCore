@@ -19,15 +19,9 @@ class ModelFilter
         $this->modelClass = $modelClass;
     }
 
-    public static function __callStatic($method, $args)
+    public static function make($modelClass)
     {
-        $instance = new static($args[0]);
-
-        if (method_exists($instance, $method)) {
-            return $instance->$method();
-        }
-
-        throw new \BadMethodCallException("Metoda {$method} nie istnieje.");
+        return new static($modelClass);
     }
 
     public function search() {

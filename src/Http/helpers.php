@@ -2,6 +2,7 @@
 
 use Upsoftware\Core\Classes\Core;
 use Upsoftware\Core\Classes\Media;
+use Upsoftware\Core\Classes\ModelFilter;
 
 if (! function_exists('core')) {
     /**
@@ -53,5 +54,12 @@ if (! function_exists('set_config')) {
         }, $configContent);
 
         file_put_contents($filePath, $configContent);
+    }
+}
+
+
+if (!function_exists('ModelFilter')) {
+    function ModelFilter($modelClass) {
+        return ModelFilter::make($modelClass);
     }
 }
