@@ -40,6 +40,8 @@ class CoreServiceProvider extends ServiceProvider
                 \Upsoftware\Core\Console\Commands\UpsoftwareMakeModule::class,
                 \Upsoftware\Core\Console\Commands\UpsoftwareMakeController::class,
                 \Upsoftware\Core\Console\Commands\UpsoftwareMakeModel::class,
+                \Upsoftware\Core\Console\Commands\UpsoftwareMakeResource::class,
+                \Upsoftware\Core\Console\Commands\UpsoftwareMakeRequest::class,
             ]);
         }
     }
