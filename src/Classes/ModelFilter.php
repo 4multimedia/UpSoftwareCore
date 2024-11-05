@@ -8,7 +8,7 @@ class ModelFilter
 {
     protected $modelClass;
 
-    private $pagination = false;
+    private $pagination = true;
 
     public function __construct($modelClass)
     {
@@ -17,6 +17,11 @@ class ModelFilter
         }
 
         $this->modelClass = $modelClass;
+    }
+
+    public function pagination($pagination) {
+        $this->pagination = $pagination;
+        return $this;
     }
 
     public static function make($modelClass)
