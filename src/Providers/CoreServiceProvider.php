@@ -2,6 +2,7 @@
 
 namespace Upsoftware\Core\Providers;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +25,10 @@ class CoreServiceProvider extends ServiceProvider
 
         Route::aliasMiddleware('locale', \Upsoftware\Core\Http\Middleware\LocaleMiddleware::class);
         Route::aliasMiddleware('restricted-ip', \Upsoftware\Core\Http\Middleware\RestrictedIpMiddleware::class);
+
+        Builder::macro('like', function ($column, $value) {
+            return $this->where($column, 'LIKE', '%' . $value . '%');
+        });
     }
 
     public function register(): void
