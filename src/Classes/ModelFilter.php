@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 
 class ModelFilter
 {
-    protected Model $modelClass;
+    protected $modelClass;
     protected Builder $query;
     private bool $pagination = true;
     private array $columns;
