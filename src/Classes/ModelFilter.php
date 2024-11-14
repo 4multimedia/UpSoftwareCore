@@ -41,13 +41,12 @@ class ModelFilter
         $orderBy = request()->input('order_by', 'name');
         $direction = request()->descending === 'true' ? 'DESC' : 'ASC';
 
-        $items = $this->modelClass::orderBy($orderBy, $direction);
-        if ($this->pagination) {
-            return $items->paginate($rowsPerPage);
-        } else {
-            return $items->get();
-        }
+        $this->query->orderBy($orderBy, $direction);
 
-        return $items;
+        if ($this->pagination) {
+            return $this->query->paginate($rowsPerPage);
+        } else {
+            return $this->query->get();
+        }
     }
 }
