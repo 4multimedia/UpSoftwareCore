@@ -18,6 +18,8 @@
             $middleware[] = InitializeTenancyByDomain::class;
             $middleware[] = PreventAccessFromCentralDomains::class;
 
+            $apiPrefix = app('apiPrefix');
+
             if (is_dir($directory)) {
                 $files = File::files($directory);
                 foreach ($files as $file) {
@@ -26,7 +28,7 @@
                         Route::middleware($middleware)
                             ->namespace($this->getNamespaceRoot() . "\\Http\\Controllers")
                             ->as('api.' . $this->shortName() . '.')
-                            ->prefix(config('upsoftware.api_prefix')."/".$this->shortName())
+                            ->prefix(config($apiPrefix).$this->shortName())
                             ->group($file);
                     } else {
                         Route::namespace($this->getNamespaceRoot() . "\\Http\\Controllers")

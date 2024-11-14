@@ -98,7 +98,7 @@ class ModelFilter
             }
         }
 
-        $rowsPerPage = request()->input('rows_per_page', 10);
+        $rowsPerPage = request()->input('rows_per_page', config('upsoftware.rows_per_page', 100));
         $orderBy = request()->input('order_by', 'name');
         $direction = request()->descending === 'true' ? 'DESC' : 'ASC';
 

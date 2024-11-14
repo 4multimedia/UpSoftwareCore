@@ -14,6 +14,7 @@
             'register' => true,
             'reset' => true
         ],
+        'rows_per_page' => 100,
         'login' => [
             'scenario' => 'otp', // otp, none
         ],
