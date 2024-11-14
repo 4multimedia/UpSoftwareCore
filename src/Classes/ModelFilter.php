@@ -29,6 +29,12 @@ class ModelFilter
         return new static($modelClass);
     }
 
+    public function __call($method, $parameters)
+    {
+        $this->query = $this->query->$method(...$parameters);
+        return $this;
+    }
+
     public function search() {
         $rowsPerPage = request()->input('rows_per_page', 10);
         $orderBy = request()->input('order_by', 'name');
