@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ModelFilter
 {
     protected $modelClass;
-
+    protected $query;
     private $pagination = true;
 
     public function __construct($modelClass)
@@ -17,6 +17,7 @@ class ModelFilter
         }
 
         $this->modelClass = $modelClass;
+        $this->query = $modelClass::query();
     }
 
     public function pagination($pagination) {
