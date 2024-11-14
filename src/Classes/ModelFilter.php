@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Schema;
 
 class ModelFilter
 {
-    protected $modelClass;
-    protected $query;
-    private $pagination = true;
-    private $columns;
-    private $joinColumns = [];
+    protected Model $modelClass;
+    protected Builder $query;
+    private bool $pagination = true;
+    private array $columns;
+    private array $joinColumns = [];
     private $joinTable;
     private $joinCondition;
 
@@ -23,8 +23,9 @@ class ModelFilter
         }
 
         $this->modelClass = $modelClass;
-        $this->query = $modelClass::query();
-        $this->columns = Schema::getColumnListing((new $modelClass)->getTable());
+        $this->modelInstance = new $modelClass;
+        $this->query = $this->modelInstance->newQuery();
+        $this->columns = Schema::getColumnListing($this->modelInstance->getTable());
     }
 
     public function pagination($pagination) {
@@ -34,9 +35,26 @@ class ModelFilter
 
     public function join($table, $foreignKey, $localKey)
     {
+        return $this->setJoin('join', $table, $foreignKey, $localKey);
+    }
+
+    public function leftJoin($table, $foreignKey, $localKey)
+    {
+        return $this->setJoin('leftJoin', $table, $foreignKey, $localKey);
+    }
+
+    public function rightJoin($table, $foreignKey, $localKey)
+    {
+        return $this->setJoin('rightJoin', $table, $foreignKey, $localKey);
+    }
+
+    private function setJoin($type, $table, $foreignKey, $localKey)
+    {
         $this->joinTable = $table;
         $this->joinCondition = [$foreignKey, '=', $localKey];
-        $this->query->join($table, ...$this->joinCondition);
+        $this->joinType = $type;
+
+        $this->query->{$this->joinType}($table, ...$this->joinCondition);
 
         $this->joinColumns = Schema::getColumnListing($table);
         return $this;
@@ -58,10 +76,25 @@ class ModelFilter
         $request = request()->all();
 
         foreach ($request as $key => $value) {
-            if (in_array($key, $this->columns)) {
-                $this->query->where($this->modelClass::getTable() . '.' . $key, 'LIKE', "%$value%");
-            } elseif (in_array($key, $this->joinColumns)) {
-                $this->query->where($this->joinTable . '.' . $key, 'LIKE', "%$value%");
+            $column = $key;
+            $operator = 'LIKE';
+            $valuePattern = $value;
+
+            if (str_starts_with($key, '_') && str_ends_with($key, '_')) {
+                $column = trim($key, '_');
+                $valuePattern = "%$value%";
+            } elseif (str_starts_with($key, '_')) {
+                $column = ltrim($key, '_');
+                $valuePattern = "%$value";
+            } elseif (str_ends_with($key, '_')) {
+                $column = rtrim($key, '_');
+                $valuePattern = "$value%";
+            }
+
+            if (in_array($column, $this->columns)) {
+                $this->query->where($this->modelInstance->getTable() . '.' . $column, $operator, $valuePattern);
+            } elseif (in_array($column, $this->joinColumns)) {
+                $this->query->where($this->joinTable . '.' . $column, $operator, $valuePattern);
             }
         }
 
@@ -70,13 +103,13 @@ class ModelFilter
         $direction = request()->descending === 'true' ? 'DESC' : 'ASC';
 
         if (in_array($orderBy, $this->columns)) {
-            $this->query->orderBy($this->modelClass::getTable() . '.' . $orderBy, $direction);
+            $this->query->orderBy($this->modelInstance->getTable() . '.' . $orderBy, $direction);
         } elseif (in_array($orderBy, $this->joinColumns)) {
             $this->query->orderBy($this->joinTable . '.' . $orderBy, $direction);
         }
 
         if ($this->pagination) {
-            return $this->query->paginate($rowsPerPage, 100);
+            return $this->query->paginate($rowsPerPage);
         } else {
             return $this->query->get();
         }
