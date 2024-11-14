@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Schema;
 
 class ModelFilter
 {
-    protected Model $modelClass;
-    protected Builder $query;
-    private bool $pagination = true;
+    protected $modelClass;
+    protected $query;
+    private $pagination = true;
     private $columns;
     private $joinColumns = [];
     private $joinTable;
