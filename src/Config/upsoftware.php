@@ -14,10 +14,12 @@
             'register' => true,
             'reset' => true
         ],
+        'tenancy' => true,
         'rows_per_page' => 100,
         'login' => [
             'scenario' => 'otp', // otp, none
         ],
+        'user_resources' => \Upsoftware\Auth\Http\Resources\UserResource::class,
         'register' => [
             'scenario' => 'otp', // otp, otp_auto, auto, activate
         ],

@@ -19,6 +19,10 @@ class UpsoftwareInstall extends Command
         $this->info('Publish Translation Loader');
         Artisan::call('vendor:publish --provider=Spatie\TranslationLoader\TranslationServiceProvider');
 
+        if (config('upsoftware.tenancy', false)) {
+            Artisan::call('tenancy:install');
+        }
+
         $this->info('Create hash configuration');
         core()->set_config('hashids', [
             'connections.main.salt' => Str::random(32),
