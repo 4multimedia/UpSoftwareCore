@@ -14,9 +14,10 @@
         {
             $directory = $this->getBasePath()."/".$this->convention->routesFolder();
 
-            $exclude_domain = $this->config('tenancy_exclude_domain', []);
+            $host = request()->getHost();
+            $exclude_domain = config('upsoftware.tenancy_exclude_domain', []);
             $middleware = ['api', 'locale'];
-            if (config('upsoftware.tenancy', false)) {
+            if (config('upsoftware.tenancy', false) && !in_array($host, $exclude_domain)) {
                 $middleware[] = InitializeTenancyByDomain::class;
                 $middleware[] = PreventAccessFromCentralDomains::class;
             }

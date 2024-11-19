@@ -15,6 +15,7 @@
             'reset' => true
         ],
         'tenancy' => true,
+        'tenancy_exclude_domain' => [],
         'rows_per_page' => 100,
         'login' => [
             'scenario' => 'otp', // otp, none
