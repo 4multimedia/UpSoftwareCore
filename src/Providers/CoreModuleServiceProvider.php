@@ -14,6 +14,7 @@
         {
             $directory = $this->getBasePath()."/".$this->convention->routesFolder();
 
+            $exclude_domain = $this->config('tenancy_exclude_domain', []);
             $middleware = ['api', 'locale'];
             if (config('upsoftware.tenancy', false)) {
                 $middleware[] = InitializeTenancyByDomain::class;
