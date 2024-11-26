@@ -80,9 +80,7 @@ class ModelFilter
             $operator = 'LIKE';
             $valuePattern = $value;
 
-            if (str_starts_with($key, '[') && str_ends_with($key, ']')) {
-                $column = ltrim($key, '[');
-                $column = rtrim($column, ']');
+            if (str_contains($value, ',')) {
                 $valuePattern = explode(",", $value);
             } elseif (str_starts_with($key, '_') && str_ends_with($key, '_')) {
                 $column = trim($key, '_');
