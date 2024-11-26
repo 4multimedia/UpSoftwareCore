@@ -80,7 +80,11 @@ class ModelFilter
             $operator = 'LIKE';
             $valuePattern = $value;
 
-            if (str_starts_with($key, '_') && str_ends_with($key, '_')) {
+            if (str_starts_with($key, '[') && str_ends_with($key, ']')) {
+                $column = ltrim($key, '[');
+                $column = rtrim($column, ']');
+                $valuePattern = explode(",", $value);
+            } elseif (str_starts_with($key, '_') && str_ends_with($key, '_')) {
                 $column = trim($key, '_');
                 $valuePattern = "%$value%";
             } elseif (str_starts_with($key, '_')) {
@@ -92,7 +96,11 @@ class ModelFilter
             }
 
             if (in_array($column, $this->columns)) {
-                $this->query->where($this->modelInstance->getTable() . '.' . $column, $operator, $valuePattern);
+                if (is_array($valuePattern)) {
+                    $this->query->whereIn($this->modelInstance->getTable() . '.' . $column, $valuePattern);
+                } else {
+                    $this->query->where($this->modelInstance->getTable() . '.' . $column, $operator, $valuePattern);
+                }
             } elseif (in_array($column, $this->joinColumns)) {
                 $this->query->where($this->joinTable . '.' . $column, $operator, $valuePattern);
             }
