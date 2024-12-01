@@ -35,9 +35,14 @@ trait UseHash {
         return $this->getHash($this->{$this->primaryKey});
     }
 
-    public static function byHash($hash): ?self
+    public static function byHash($hash, $get = true): ?self
     {
-        return self::query()->byHash($hash)->first();
+        $item = self::query()->byHash($hash);
+        if ($get) {
+            return $item->get();
+        } else {
+            return $item;
+        }
     }
 
     public function shouldHashPersist(): bool
