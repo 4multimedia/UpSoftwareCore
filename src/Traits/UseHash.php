@@ -39,7 +39,7 @@ trait UseHash {
     {
         $item = self::query()->byHash($hash);
         if ($get) {
-            return $item->get();
+            return $item->first();
         } else {
             return $item;
         }
